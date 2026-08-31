@@ -9,7 +9,7 @@ you tell it your native language on first run.
 In Claude Code:
 
 ```
-/plugin marketplace add cwq/cwq-vocab-skill
+/plugin marketplace add wenqicheng/cwq-vocab-skill
 /plugin install vocab-practice@cwq-vocab-marketplace
 ```
 
