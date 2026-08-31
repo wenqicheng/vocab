@@ -7,39 +7,81 @@ language on first run.
 
 ## See it in action
 
-**You hit a word you don't know:**
+**Paste any sentence. It finds the one word worth learning, and explains it in full.**
 
 ```
-You: what does "fragile" mean here — "the setup is fragile"
+You: This is a demo sentence, meant to show how the vocab agent works —
+     it can spot the one word here that most people find obscure.
 
-Claude: fragile — easily broken, and not just physically.
-        /ˈfrædʒaɪl/ · casual/neutral
+Claude: Overall meaning: a self-describing demo sentence. And fittingly,
+        the word most people find hard here is "obscure" itself.
 
-        "The deploy script is fragile — one missing env var and it breaks."
+        Terms you might not know:
+        1. obscure — little-known, unclear, hard to understand
+        2. spot (verb) — to notice or identify
+        3. demo — short for "demonstration"
 
-        Save this word? (y/n)
-You: y
+        Which should I explain and save? Reply with a number, or "all".
+
+You: 1
+
+Claude: obscure /əbˈskjʊr/ — uhb-SKYOOR
+
+        English definition: Two related senses. (1) Little-known: not
+        famous, rarely encountered — few people know it ("an obscure
+        word," "an obscure band"). (2) Unclear/hard to understand:
+        vague, confusing, hidden in meaning ("the instructions were
+        obscure"). As a verb: to hide or block from view ("clouds
+        obscured the sun" 遮蔽).
+
+        中文翻译: (形容词) 鲜为人知的；晦涩难懂的、模糊的
+                  (动词) 遮蔽、使模糊
+
+        Usage:
+          a. "The agent spots the one word most people find obscure."
+          b. "He cited an obscure 1970s study nobody had heard of."
+          c. "Fog obscured the road ahead." (verb — hid from view)
+
+        Word family: obscurity (n.), obscured (adj.)
+        Close words: arcane, esoteric, cryptic, vague
+        Opposites: well-known, obvious, clear
+
+        Register: neutral — common in both everyday and formal use
+
         Saved.
 ```
 
-**Later, you practice:**
+**Practice with spaced repetition.**
+
+Words come back on a schedule based on how well you know them — never
+reviewed or getting them wrong comes back soonest, words you've nailed
+come back weeks later. Each session runs in batches of 5. Low-score
+words get multiple choice; words you've scored well get harder,
+type-in-a-sentence questions instead.
 
 ```
-You: let's practice
+You: practice
 
-Claude: 1/8 — "grain"
-        A) what one row of a table represents
-        B) a small hard seed of wheat or rice
+Claude: Selected 25 due words. We'll go in batches of 5.
+        Answer format: answer/confidence, separated by semicolons.
+        Confidence: 5=know it, 4=confident, 3=normal, 2=unsure, 1=guessing
 
-        Your answer:
-You: A
-        Correct. Next — "fragile":
-        "The ___ old bridge swayed with every step."
-        Type the word:
+        Batch 1 of 5
+
+        Q1. Which word means "little-known, hard to understand"?
+        A. obvious          B. obscure
+
+        Q2. "The instructions were ___ , so nobody followed them right."
+        A. obscure           B. concrete
+
+        (3 more questions...)
+
+You: b; a/4; ...
+
+Claude: 2/2 correct. Scores updated. Next batch due sooner if you missed
+        one, later if you nailed it.
 ```
 
-Struggling words come back sooner. Words you know well come back later
-— standard spaced repetition, no setup required.
 
 ## Install
 
