@@ -1,6 +1,6 @@
 {
-  "name": "cwq-vocab-marketplace",
-  "owner": { "name": "cwq" },
+  "name": "vocab-marketplace",
+  "owner": { "name": "wenqicheng" },
   "plugins": [
     {
       "name": "vocab-practice",

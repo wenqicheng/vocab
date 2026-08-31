@@ -45,7 +45,7 @@ Struggling words come back sooner. Words you know well come back later
 
 ```
 /plugin marketplace add wenqicheng/vocab
-/plugin install vocab-practice@cwq-vocab-marketplace
+/plugin install vocab-practice@vocab-marketplace
 ```
 
 Restart Claude Code (hooks load at session start), then just talk —
