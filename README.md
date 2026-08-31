@@ -1,42 +1,80 @@
-# cwq-vocab-skill
+# vocab
 
-A Claude Code plugin: capture new words as you read or write, and
-practice them with spaced repetition. Works for any language pair —
-you tell it your native language on first run.
+A Claude Code plugin that turns any word you run into — while reading,
+chatting, or working — into a saved flashcard, and practices it with
+spaced repetition. Works for any two languages: you pick your native
+language on first run.
+
+## See it in action
+
+**You hit a word you don't know:**
+
+```
+You: what does "fragile" mean here — "the setup is fragile"
+
+Claude: fragile — easily broken, and not just physically.
+        /ˈfrædʒaɪl/ · casual/neutral
+
+        "The deploy script is fragile — one missing env var and it breaks."
+
+        Save this word? (y/n)
+You: y
+        Saved.
+```
+
+**Later, you practice:**
+
+```
+You: let's practice
+
+Claude: 1/8 — "grain"
+        A) what one row of a table represents
+        B) a small hard seed of wheat or rice
+
+        Your answer:
+You: A
+        Correct. Next — "fragile":
+        "The ___ old bridge swayed with every step."
+        Type the word:
+```
+
+Struggling words come back sooner. Words you know well come back later
+— standard spaced repetition, no setup required.
 
 ## Install
 
-In Claude Code:
-
 ```
-/plugin marketplace add wenqicheng/cwq-vocab-skill
+/plugin marketplace add wenqicheng/vocab
 /plugin install vocab-practice@cwq-vocab-marketplace
 ```
 
-Then restart Claude Code (hook settings load at session start).
-
-## What it does
-
-- Explains a new word — meaning, pronunciation, register, one example
-  sentence — and saves it if you want to keep it.
-- Runs practice sessions with spaced repetition: struggling words come
-  back sooner, words you know well come back later.
-- Keeps everything in one `vocab.json` file, so another tool (e.g. an
-  assistant on your phone) can read and write the same file if it lives
-  on a cloud drive.
-
-## Privacy — the confidential content check
-
-The vocab bank is personal study material. A `PreToolUse` hook ships
-with this plugin and blocks any write to `vocab.json` that contains
-work-confidential detail — a ticket id, an internal-looking URL, a large
-exact metric, or any term you list in your own `sensitive_terms.json`.
-It rewrites the example generically instead of just refusing. See
-`plugins/vocab-practice/skills/vocab-practice/SKILL.md` for the exact
-rules.
+Restart Claude Code (hooks load at session start), then just talk —
+share a word, ask "let's practice", or ask "how am I doing".
 
 ## First run
 
-The skill asks for your native language and where to keep `vocab.json`,
-then writes that to `~/.vocab-practice/config.json`. Nothing is
-hardcoded to any one person's folder.
+Claude asks two questions once — your native language, and where to
+keep `vocab.json` (a folder that syncs to your own cloud drive works
+well, so a second device can read the same file later). Nothing is
+hardcoded to any one person's setup.
+
+## Privacy: the confidential-content guard
+
+Your vocab file is personal and may sync to your own cloud drive. A
+`PreToolUse` hook ships with this plugin and blocks any save containing
+work-confidential detail — a ticket id, an internal-looking URL, a large
+exact metric, or any term you list yourself in `sensitive_terms.json`.
+It rewrites the example generically instead of just refusing.
+
+## What's in the box
+
+| Part | Does what |
+|---|---|
+| `skills/vocab-practice/SKILL.md` | capture flow, entry format, practice logic |
+| `scripts/vocab_practice.py` | picks due words, scores your answers |
+| `hooks/check-vocab-confidential.py` | blocks confidential content before it's saved |
+| `agents/vocab.md` | a dedicated session where every message is vocab input |
+
+## License
+
+MIT — see [LICENSE](LICENSE).
