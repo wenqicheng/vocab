@@ -1,0 +1,11 @@
+{
+  "name": "cwq-vocab-marketplace",
+  "owner": { "name": "cwq" },
+  "plugins": [
+    {
+      "name": "vocab-practice",
+      "source": "./plugins/vocab-practice",
+      "description": "Capture new words as you read or write, and practice them with spaced repetition — for anyone learning a language."
+    }
+  ]
+}
