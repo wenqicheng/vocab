@@ -17,6 +17,9 @@ DEFAULTS = {
     "vocab_dir": str(Path.home() / "vocab-practice"),
     "vocab_file": "vocab.json",
     "native_language": "",
+    "purpose": "",
+    "level": "intermediate",
+    "level_set_on": "",
 }
 
 

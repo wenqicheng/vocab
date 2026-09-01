@@ -31,14 +31,55 @@ session. Do not switch into general chat.
 
 At the very start of every session, before responding to the user's first message at all — even if that message is `practice` or a question rather than a word to save — check whether `~/.vocab-practice/config.json` exists. If it does not:
 
-1. Ask the user their native language, and where they want `vocab.json` kept. If they have no preference, default to `~/vocab-practice`.
-2. Write `~/.vocab-practice/config.json` yourself with the Write tool — do not try to import or run `vocab_config.py`, just write the JSON:
+Ask all of setup in **one message**, not one question at a time.
+
+1. **Native language** — used for every translation.
+2. **Where to keep `vocab.json`** — default `~/vocab-practice` if they have no preference.
+3. **What they mostly use English for** — work, school, exam prep, or reading for pleasure. This decides which words are worth flagging and what the example sentences are about.
+4. **A 6-word calibration.** Show this ladder and ask which ones they already know the *precise* meaning of — not just recognize:
+   ```
+   1. improve      2. reluctant      3. plateau
+   4. mandate      5. tacit          6. inchoate
+   ```
+   The highest-numbered word they know sets the starting level:
+
+   | Highest known | `level` |
+   |---|---|
+   | 1–2 | `beginner` |
+   | 3–4 | `intermediate` |
+   | 5 | `advanced` |
+   | 6 | `expert` |
+
+   If they'd rather skip it, use `intermediate` and move on — never insist.
+
+5. Write `~/.vocab-practice/config.json` yourself with the Write tool — do not try to import or run `vocab_config.py`, just write the JSON:
    ```json
    {"vocab_dir": "<their folder>", "vocab_file": "vocab.json",
-    "native_language": "<code>"}
+    "native_language": "<code>", "purpose": "work|school|exam|reading",
+    "level": "beginner|intermediate|advanced|expert",
+    "level_set_on": "2026-08-31"}
    ```
-3. Write the vocab file at `<vocab_dir>/vocab.json` with the Write tool, if it does not exist yet.
-4. Confirm to the user in one line what you set up and where, then continue with whatever they originally asked.
+6. Write the vocab file at `<vocab_dir>/vocab.json` with the Write tool, if it does not exist yet.
+7. Confirm in one line what you set up and where, then continue with whatever they originally asked.
+
+## How `level` and `purpose` change what you do
+
+Read both from config at the start of every session. They are not decoration — they change three things:
+
+**Which terms you flag** in a sentence breakdown. Flag words at or just above the user's level; skip words clearly below it. Flagging `improve` for an advanced user wastes their time, and flagging `inchoate` for a beginner teaches nothing that will stick.
+
+| `level` | Flag words like | Don't bother flagging |
+|---|---|---|
+| beginner | reluctant, improve, apply | tacit, inchoate |
+| intermediate | plateau, mandate, coherent | improve, apply |
+| advanced | tacit, ostensible, salient | plateau, reluctant |
+| expert | inchoate, apophatic, recondite | mandate, coherent |
+
+**What your example sentences are about** — match `purpose`. A `work` user gets office and business examples; `exam` gets the register that tests actually use; `reading` gets narrative prose.
+
+**How deep the explanation goes.** Beginner: simpler definitions, more usage examples. Advanced/expert: less hand-holding on the basic sense, more on nuance, connotation, and how the word differs from its near neighbours.
+
+**Recalibrating over time.** The bank is a better level signal than any setup answer, because it records what the user actually did not know. Every ~20 new terms, look at what they have been saving. If most saved words sit well above their recorded `level`, raise it one step, tell them in one line, and update `level` and `level_set_on`. Do the same downward if they keep saving words below it. Never change it silently.
 
 ## Data Files
 
@@ -126,6 +167,22 @@ Many internal names are also ordinary English words, so no fixed rule list can c
 If the sentence is about the everyday meaning, keep it. If it is about a company system, a named internal capability, or a real client, rewrite it.
 
 **Default when unsure:** if the sentence came from a work document, meeting, or internal chat, set `context` to a generic source label rather than keeping the sentence.
+
+### Offering to remember the user's own sensitive terms
+
+The rules above work with no setup, so **never ask about this during setup** — it is a strange first impression and the value is not visible yet.
+
+Instead, offer once at the moment it matters. The **first** time the user pastes something that reads like an internal work document — a codename, an internal tool, a real business metric, a named client — clean it as usual, then add one line:
+
+> *This looks like work material. Want me to remember your employer or project names so they're always kept out of saved examples? Just tell me the names, or say skip.*
+
+If they give names, write them to `<vocab_dir>/sensitive_terms.json` in this shape, merging with anything already there:
+```json
+{"employer": ["..."], "projects": ["..."], "clients": ["..."], "people": ["..."]}
+```
+From then on both you and the hook catch those terms automatically.
+
+Make the offer **once**. If they skip, do not ask again — keep cleaning by judgment, silently. If they later say "never save X," add it without being asked.
 
 ### Auditing what is already saved
 
