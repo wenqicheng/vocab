@@ -5,7 +5,7 @@
     {
       "name": "vocab-practice",
       "source": "./plugins/vocab-practice",
-      "description": "Capture new words as you read or write, and practice them with spaced repetition — for anyone learning a language."
+      "description": "A dedicated agent session: paste a sentence, it spots the word worth learning, explains it, and practices it with spaced repetition."
     }
   ]
 }

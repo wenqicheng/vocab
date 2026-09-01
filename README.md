@@ -1,9 +1,23 @@
 # vocab
 
-A Claude Code plugin that turns any word you run into — while reading,
-chatting, or working — into a saved flashcard, and practices it with
-spaced repetition. Works for any two languages: you pick your native
-language on first run.
+Paste anything you're reading. Claude spots the one word you don't
+know, explains it in full, and builds your personal vocab list — no
+dictionary lookups, no guessing what to study. Then practice it with
+spaced repetition, in a dedicated session that stays separate from your
+normal coding work.
+
+## How you use it
+
+This ships as a dedicated **agent**, not a background skill — it never
+fires inside your normal coding sessions. You open a separate session
+just for vocab:
+
+```
+claude --agent vocab
+```
+
+Every message you type in that session is vocab input by default.
+Nothing about your other Claude Code sessions changes.
 
 ## See it in action
 
@@ -82,7 +96,6 @@ Claude: 2/2 correct. Scores updated. Next batch due sooner if you missed
         one, later if you nailed it.
 ```
 
-
 ## Install
 
 ```
@@ -90,12 +103,16 @@ Claude: 2/2 correct. Scores updated. Next batch due sooner if you missed
 /plugin install vocab-practice@vocab-marketplace
 ```
 
-Restart Claude Code (hooks load at session start), then just talk —
-share a word, ask "let's practice", or ask "how am I doing".
+Restart Claude Code (hooks load at session start), then start your
+vocab session:
+
+```
+claude --agent vocab
+```
 
 ## First run
 
-Claude asks two questions once — your native language, and where to
+The agent asks two questions once — your native language, and where to
 keep `vocab.json` (a folder that syncs to your own cloud drive works
 well, so a second device can read the same file later). Nothing is
 hardcoded to any one person's setup.
@@ -112,10 +129,9 @@ It rewrites the example generically instead of just refusing.
 
 | Part | Does what |
 |---|---|
-| `skills/vocab-practice/SKILL.md` | capture flow, entry format, practice logic |
+| `agents/vocab.md` | the dedicated agent — setup, capture flow, entry format, practice logic |
 | `scripts/vocab_practice.py` | picks due words, scores your answers |
 | `hooks/check-vocab-confidential.py` | blocks confidential content before it's saved |
-| `agents/vocab.md` | a dedicated session where every message is vocab input |
 
 ## License
 
