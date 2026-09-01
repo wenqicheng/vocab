@@ -6,6 +6,13 @@ dictionary lookups, no guessing what to study. Then practice it with
 spaced repetition, in a dedicated session that stays separate from your
 normal coding work.
 
+**Built for two kinds of people:**
+- Learning a new language — capture words as you go, practice on a schedule.
+- Already fluent, but plateaued — you use the language daily and can follow
+  any sentence, but certain words still slide past half-understood. This
+  catches exactly those: words you've heard many times but never actually
+  pinned down.
+
 ## Install and use
 
 ```
