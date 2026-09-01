@@ -20,13 +20,22 @@ question, not a word to save — check whether
 
 1. Ask the user their native language, and where they want `vocab.json`
    kept (a folder that syncs to their own cloud drive works well, so a
-   second device can read/write the same file later).
-2. Write the config with `save_config()`.
-3. Create the vocab file at that path if it does not exist yet:
+   second device can read/write the same file later). If they have no
+   preference, default to `~/vocab-practice`.
+2. Write `~/.vocab-practice/config.json` yourself with the Write tool —
+   do not try to import or run `vocab_config.py`, just write the JSON:
+   ```json
+   { "vocab_dir": "<their folder>", "vocab_file": "vocab.json",
+     "native_language": "<code>", "owner": "<name>" }
+   ```
+3. Write the vocab file at `<vocab_dir>/vocab.json` with the Write tool,
+   if it does not exist yet:
    ```json
    { "owner": "<name>", "native_language": "<code>", "schema_version": 1,
      "updated_at": "<now>", "words": [] }
    ```
+4. Confirm to the user in one line what you set up and where, then
+   continue with whatever they originally asked.
 
 Every script in `${CLAUDE_PLUGIN_ROOT}/scripts/` reads the path from
 this config — nothing is hardcoded to any one person's folder.
