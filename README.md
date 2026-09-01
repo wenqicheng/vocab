@@ -6,18 +6,23 @@ dictionary lookups, no guessing what to study. Then practice it with
 spaced repetition, in a dedicated session that stays separate from your
 normal coding work.
 
-## How you use it
+## Install and use
 
-This ships as a dedicated **agent**, not a background skill — it never
-fires inside your normal coding sessions. You open a separate session
-just for vocab:
+```
+/plugin marketplace add wenqicheng/vocab
+/plugin install vocab-practice@vocab-marketplace
+```
+
+Restart Claude Code (hooks load at session start). This ships as a
+dedicated **agent**, not a background skill — it never fires inside
+your normal coding sessions. Open a separate session just for vocab:
 
 ```
 claude --agent vocab
 ```
 
-Every message you type in that session is vocab input by default.
-Nothing about your other Claude Code sessions changes.
+Every message you type there is vocab input by default. Nothing about
+your other Claude Code sessions changes.
 
 ## See it in action
 
@@ -94,20 +99,6 @@ You: b; a/4; ...
 
 Claude: 2/2 correct. Scores updated. Next batch due sooner if you missed
         one, later if you nailed it.
-```
-
-## Install
-
-```
-/plugin marketplace add wenqicheng/vocab
-/plugin install vocab-practice@vocab-marketplace
-```
-
-Restart Claude Code (hooks load at session start), then start your
-vocab session:
-
-```
-claude --agent vocab
 ```
 
 ## First run
