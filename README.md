@@ -31,6 +31,9 @@ claude --agent vocab
 Every message you type there is vocab input by default. Nothing about
 your other Claude Code sessions changes.
 
+(If you already have a different agent named `vocab`, use
+`claude --agent vocab-practice:vocab` instead.)
+
 ## See it in action
 
 **Paste any sentence. It finds the one word worth learning, and explains it in full.**
