@@ -19,9 +19,7 @@ question, not a word to save — check whether
 `${CLAUDE_PLUGIN_ROOT}/scripts/vocab_config.py`). If it does not:
 
 1. Ask the user their native language, and where they want `vocab.json`
-   kept (a folder that syncs to their own cloud drive works well, so a
-   second device can read/write the same file later). If they have no
-   preference, default to `~/vocab-practice`.
+   kept. If they have no preference, default to `~/vocab-practice`.
 2. Write `~/.vocab-practice/config.json` yourself with the Write tool —
    do not try to import or run `vocab_config.py`, just write the JSON:
    ```json
@@ -42,7 +40,7 @@ this config — nothing is hardcoded to any one person's folder.
 
 ## ⛔ Confidential content check — mandatory before every write
 
-This bank is personal and may sync to the user's own cloud drive. **No
+This bank is personal. **No
 work-confidential detail may enter it.** Before writing any `example` or
 `context` string:
 
@@ -99,19 +97,11 @@ When the user pastes a sentence or shares a word:
    register, a translation, 2-3 usage examples, related words,
    opposites. Ask if they want it saved.
 3. If yes: run the confidential content check, re-read `vocab.json`
-   immediately before writing (see "One file, multiple writers"
-   below), then append the new entry with `added` = today's date.
+   immediately before writing (someone may have edited it since you
+   loaded it), then append the new entry with `added` = today's date.
 4. If the term already exists, do not duplicate it — merge: keep the
    higher `score`, keep `reviews`, and only update fields the user is
    correcting.
-
-## One file, multiple writers
-
-`vocab.json` may be edited by more than one tool — this agent, and
-potentially another assistant reading the same cloud-drive file.
-**Always re-read the file immediately before writing it.** The real
-risk with a shared file is overwriting a change you never saw, not two
-writers landing at the same instant.
 
 ## Practice session
 

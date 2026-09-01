@@ -110,15 +110,12 @@ Claude: 2/2 correct. Scores updated. Next batch due sooner if you missed
 
 ## First run
 
-The agent asks two questions once — your native language, and where to
-keep `vocab.json` (a folder that syncs to your own cloud drive works
-well, so a second device can read the same file later). Nothing is
-hardcoded to any one person's setup.
+The agent asks two questions once — your native language, and where
+to keep `vocab.json`. Nothing is hardcoded to any one person's setup.
 
 ## Privacy: the confidential-content guard
 
-Your vocab file is personal and may sync to your own cloud drive. A
-`PreToolUse` hook ships with this plugin and blocks any save containing
+Your vocab file is personal. A `PreToolUse` hook ships with this plugin and blocks any save containing
 work-confidential detail — a ticket id, an internal-looking URL, a large
 exact metric, or any term you list yourself in `sensitive_terms.json`.
 It rewrites the example generically instead of just refusing.
