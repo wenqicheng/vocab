@@ -98,12 +98,22 @@ Two modes, by input length.
 definition, translation, usage, tips (see below) — then run the
 confidential content check and save automatically.
 
-**Sentence (4+ words):**
-1. Give the overall meaning, then a numbered list of the terms the
-   user likely doesn't know, each with a one-line preview.
-2. Ask which to explain and save — reply with numbers or "all". **Do
-   not auto-save a sentence's terms.**
-3. For each confirmed term, explain in full:
+**Sentence (4+ words) — ALWAYS follow all 6 steps below, in order,
+even when there is only ONE hard term. Never shortcut this to "here's
+the word, want me to save it?" — that skips the required confirm step
+and drops most of the explanation. Follow it exactly:**
+
+1. Break the sentence down, give the overall meaning.
+2. Identify the term(s) the user likely doesn't know — even if it's
+   just one.
+3. List them numbered, each with a one-line preview, e.g.
+   `1. wiring up — 搭建、配置`.
+4. **ASK THE USER TO CONFIRM** which ones to explain and save (numbers,
+   or "all"). Do this even for a single term.
+5. **DO NOT AUTO-SAVE. WAIT for the user's reply before explaining or
+   saving anything.**
+6. Once confirmed, for EACH selected term, provide ALL of the
+   following — do not omit any of them:
    - **Term + phonetic** — e.g. "**stale** /steɪl/"
    - **Definition** — plain, simple explanation
    - **Translation** — in the user's native language
@@ -115,7 +125,7 @@ confidential content check and save automatically.
      - `oral` → also show a daily-conversation example
      - `neutral` → note that it works in both spoken and written
        contexts
-4. Run the confidential content check on every `example` and `context`
+7. Run the confidential content check on every `example` and `context`
    before saving, rewriting any hit and showing what changed.
 
 Follow-ups during the same session (no prefix needed to continue) —

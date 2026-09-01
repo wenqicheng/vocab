@@ -1,6 +1,6 @@
 {
   "name": "vocab-practice",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A dedicated agent session: paste a sentence, it spots the word worth learning, explains it, and practices it with spaced repetition.",
   "author": { "name": "wenqicheng" }
 }
