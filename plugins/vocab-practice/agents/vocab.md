@@ -94,9 +94,10 @@ a second, trimmed file is how a bank silently loses information.
 
 Two modes, by input length.
 
-**Single word or short phrase (1-3 words):** explain directly —
-definition, translation, usage, tips (see below) — then run the
-confidential content check and save automatically.
+**Single word or short phrase (1-3 words):** explain directly, using
+the SAME full field list as step 6 below (phonetic, definition,
+translation, usage, tips, related & opposite words, register) — then
+run the confidential content check and save automatically.
 
 **Sentence (4+ words) — ALWAYS follow all 6 steps below, in order,
 even when there is only ONE hard term. Never shortcut this to "here's
@@ -118,7 +119,12 @@ and drops most of the explanation. Follow it exactly:**
    - **Definition** — plain, simple explanation
    - **Translation** — in the user's native language
    - **Usage** — 2-3 example sentences
-   - **Tips** — nuance, common mistakes, register
+   - **Tips** — nuance, common mistakes, other senses the word has if
+     any
+   - **Related & opposite words** — ALWAYS include this, even for a
+     simple word: 2-3 related/close words and 1-2 opposites. This is
+     not optional filler — it's what turns one word into a small
+     network of words the user actually retains.
    - **Register**:
      - `formal` → also show a casual/oral alternative word with the
        same meaning
