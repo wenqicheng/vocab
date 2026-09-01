@@ -1,38 +1,29 @@
 # vocab
 
-Paste anything you're reading. Claude spots the one word you don't
-know, explains it in full, and builds your personal vocab list — no
-dictionary lookups, no guessing what to study. Then practice it with
-spaced repetition, in a dedicated session that stays separate from your
-normal coding work.
+**For people whose English is already fluent but stuck.** You read all day and follow every sentence, yet some words keep sliding past half-understood — heard a hundred times, never actually pinned down. This catches exactly those.
 
-**Built for two kinds of people:**
-- Learning a new language — capture words as you go, practice on a schedule.
-- Already fluent, but plateaued — you use the language daily and can follow
-  any sentence, but certain words still slide past half-understood. This
-  catches exactly those: words you've heard many times but never actually
-  pinned down.
+Paste what you're reading. Claude picks the one word worth learning, explains it using *your* sentence, and saves it. Later, it quizzes you on a schedule.
 
-## Install and use
+No dictionary tabs. No deciding what to study. No building flashcards by hand.
 
 ```
 /plugin marketplace add wenqicheng/vocab
 /plugin install vocab-practice@vocab-marketplace
 ```
 
-Restart Claude Code (hooks load at session start). This ships as a
-dedicated **agent**, not a background skill — it never fires inside
-your normal coding sessions. Open a separate session just for vocab:
+*Also works if you're learning a language from scratch — capture as you go, practice on a schedule.*
+
+## Using it
+
+This ships as a dedicated **agent**, not a background skill — it never fires inside your normal coding sessions. Open a separate session just for vocab:
 
 ```
 claude --agent vocab
 ```
 
-Every message you type there is vocab input by default. Nothing about
-your other Claude Code sessions changes.
+That's a fresh session, so it loads the plugin straight after install — no restart needed. Every message you type there is vocab input by default. Nothing about your other Claude Code sessions changes.
 
-(If you already have a different agent named `vocab`, use
-`claude --agent vocab-practice:vocab` instead.)
+(If you already have a different agent named `vocab`, use `claude --agent vocab-practice:vocab` instead.)
 
 ## See it in action
 
