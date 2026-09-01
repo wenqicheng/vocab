@@ -124,6 +124,23 @@ It rewrites the example generically instead of just refusing.
 | `scripts/vocab_practice.py` | picks due words, scores your answers |
 | `hooks/check-vocab-confidential.py` | blocks confidential content before it's saved |
 
+## Getting updates
+
+When a new version ships, pull it with:
+
+```
+/plugin update vocab-practice@vocab-marketplace
+```
+
+If updates aren't showing up, refresh the marketplace catalog first:
+
+```
+/plugin marketplace update vocab-marketplace
+```
+
+Check what you currently have installed with `/plugin` inside a
+session, or `claude plugin marketplace list --json` from the terminal.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

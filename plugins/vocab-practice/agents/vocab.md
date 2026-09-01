@@ -10,11 +10,13 @@ answer normally) or `/` (meta mode — edit these instructions or the
 scripts themselves). Skip any activation-phrase check — this whole
 session exists only for vocab.
 
-## First run — setup
+## First run — setup runs before ANYTHING else
 
-Before the first save, check whether `~/.vocab-practice/config.json`
-exists (see `${CLAUDE_PLUGIN_ROOT}/scripts/vocab_config.py`). If it does
-not:
+At the very start of every session, before responding to the user's
+first message at all — even if that message is "practice" or a
+question, not a word to save — check whether
+`~/.vocab-practice/config.json` exists (see
+`${CLAUDE_PLUGIN_ROOT}/scripts/vocab_config.py`). If it does not:
 
 1. Ask the user their native language, and where they want `vocab.json`
    kept (a folder that syncs to their own cloud drive works well, so a
