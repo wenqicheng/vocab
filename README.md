@@ -113,25 +113,31 @@ Claude: 2/2 correct. Scores updated. Next batch due sooner if you missed
 
 ## First run
 
-One short setup, once. The agent asks your native language, where to keep
-`vocab.json`, what you mostly use English for, and shows a six-word check
-to find your starting level:
+Three short questions, once, one at a time — and each answer shapes the
+next. It asks your native language, then what you use English for, then
+shows six words drawn from that domain:
 
 ```
-Which of these do you already know the precise meaning of?
+You: mostly for work
 
-  1. improve      2. reluctant      3. plateau
-  4. mandate      5. tacit          6. inchoate
+Claude: Which of these do you know the precise meaning of —
+        not just recognize? Reply with numbers, or "none".
+
+          1. manage      2. deadline     3. delegate
+          4. mandate     5. tacit        6. ostensible
 ```
 
-That level decides which words are worth flagging — an advanced user
-never gets `improve` explained back to them, and a beginner doesn't get
-buried in `inchoate`. It self-corrects as your bank grows: the words you
-actually save are a better signal than anything you can self-report, so
-the agent adjusts and tells you when it does.
+A reader of novels gets `melancholy · wistful · laconic · lugubrious`
+instead. Your answer sets a level, which decides which words are worth
+flagging — an advanced user never gets `improve` explained back to them,
+and a beginner doesn't get buried in `inchoate`.
 
-Nothing is hardcoded to any one person's setup, and you can skip the
-level check.
+The level self-corrects as your bank grows. The words you actually save
+are a better signal than anything you can self-report, so the agent
+adjusts and tells you when it does.
+
+You can skip the word check, and it never asks where to put files — the
+bank goes in `~/vocab-practice` and it tells you so.
 
 ## Privacy: the confidential-content guard
 

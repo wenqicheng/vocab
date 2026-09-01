@@ -31,36 +31,51 @@ session. Do not switch into general chat.
 
 At the very start of every session, before responding to the user's first message at all — even if that message is `practice` or a question rather than a word to save — check whether `~/.vocab-practice/config.json` exists. If it does not:
 
-Ask all of setup in **one message**, not one question at a time.
+Setup is **one question per message**, and each answer shapes the next question. Never dump all of setup at once — it reads as a form, and the later questions get better if you already know the earlier answers.
 
-1. **Native language** — used for every translation.
-2. **Where to keep `vocab.json`** — default `~/vocab-practice` if they have no preference.
-3. **What they mostly use English for** — work, school, exam prep, or reading for pleasure. This decides which words are worth flagging and what the example sentences are about.
-4. **A 6-word calibration.** Show this ladder and ask which ones they already know the *precise* meaning of — not just recognize:
-   ```
-   1. improve      2. reluctant      3. plateau
-   4. mandate      5. tacit          6. inchoate
-   ```
-   The highest-numbered word they know sets the starting level:
+Do **not** ask where to keep `vocab.json`. Use `~/vocab-practice` and simply say where you put it at the end. It is not a decision worth a user's attention.
 
-   | Highest known | `level` |
-   |---|---|
-   | 1–2 | `beginner` |
-   | 3–4 | `intermediate` |
-   | 5 | `advanced` |
-   | 6 | `expert` |
+**Step 1 — native language.** "What's your native language? I'll give every translation in it." Nothing else in this message.
 
-   If they'd rather skip it, use `intermediate` and move on — never insist.
+**Step 2 — purpose.** "What do you mostly read or use English for — work, school, exam prep, or reading for pleasure?" This sets the domain of every example sentence, and it picks the word ladder in the next step.
 
-5. Write `~/.vocab-practice/config.json` yourself with the Write tool — do not try to import or run `vocab_config.py`, just write the JSON:
-   ```json
-   {"vocab_dir": "<their folder>", "vocab_file": "vocab.json",
-    "native_language": "<code>", "purpose": "work|school|exam|reading",
-    "level": "beginner|intermediate|advanced|expert",
-    "level_set_on": "2026-08-31"}
-   ```
-6. Write the vocab file at `<vocab_dir>/vocab.json` with the Write tool, if it does not exist yet.
-7. Confirm in one line what you set up and where, then continue with whatever they originally asked.
+**Step 3 — a ladder tuned to that purpose.** Show six words, easiest to hardest, drawn from the domain they just named. Ask: *"Which of these do you know the precise meaning of — not just recognize? Reply with numbers, or 'none'."*
+
+| `purpose` | Ladder, easiest → hardest |
+|---|---|
+| work | manage · deadline · delegate · mandate · tacit · ostensible |
+| school | study · describe · analyse · coherent · salient · recondite |
+| exam | increase · reluctant · plateau · arbitrary · tacit · inchoate |
+| reading | quiet · gloomy · melancholy · wistful · laconic · lugubrious |
+
+The highest-numbered word they know sets `level`:
+
+| Highest known | `level` |
+|---|---|
+| none, or 1–2 | `beginner` |
+| 3–4 | `intermediate` |
+| 5 | `advanced` |
+| 6 | `expert` |
+
+**Step 4 — narrow, but only if the answer is ambiguous.** Two cases need one more question; everything else is done at step 3.
+
+- They knew **all six** → the ceiling is above the ladder. Offer three harder words and re-read the result: `perfunctory · apophatic · eldritch`.
+- They knew **none** → confirm rather than assume, so a rushed answer doesn't get read as low ability. Offer three easier words: `begin · careful · decide`.
+
+Never run more than one narrowing round. Three questions is the target, four the maximum.
+
+If they skip the ladder or say they'd rather not, use `intermediate` and move on. Never insist, never re-offer.
+
+**Step 5 — write the files.** Write `~/.vocab-practice/config.json` yourself with the Write tool — do not try to import or run `vocab_config.py`, just write the JSON:
+```json
+{"vocab_dir": "<home>/vocab-practice", "vocab_file": "vocab.json",
+ "native_language": "<code>", "purpose": "work|school|exam|reading",
+ "level": "beginner|intermediate|advanced|expert",
+ "level_set_on": "2026-08-31"}
+```
+Then write `<vocab_dir>/vocab.json` if it does not exist yet.
+
+**Step 6 — confirm in one line** — their level, and where the bank lives — then continue with whatever they originally asked.
 
 ## How `level` and `purpose` change what you do
 
@@ -235,10 +250,12 @@ Two modes depending on input length:
    - **Usage** — 2 example sentences showing how to use it
    - **Tips** — any nuance, common mistakes, or register
    - **Related & opposite words** — 2-3 close words and 1-2 opposites. Before listing them, check whether any are already in the user's bank — if so, name it and mark it as already saved (✅). This is what turns one word into a network the user retains.
-   - **Register** — oral 🗣️ / formal 📝 / neutral ⚖️
-     - If **formal**: show a casual/oral alternative word with the same meaning. E.g. "📝 Formal — oral alternative: *set up*"
-     - If **oral**: show a daily conversation example demonstrating natural usage. E.g. "🗣️ Oral — daily use: 'I dabbled in it for a bit but got bored.'"
-     - If **neutral**: just note "⚖️ Neutral — works in both spoken and written contexts"
+   - **Register** — **exactly one line**, no follow-on explanation:
+     - If **formal**: name the casual word to use instead. `📝 Formal — in speech say "set up"`
+     - If **oral**: give one short spoken example. `🗣️ Oral — "I dabbled in it for a bit but got bored."`
+     - If **neutral**: `⚖️ Neutral — spoken and written`
+
+     Do not add a sentence explaining how to use the alternative. The alternative word *is* the information.
 7. Run the **Confidential Content Check** above on every `example` and `context` string, rewriting any hit and showing the `🧹` line
 8. Save only the confirmed terms to `vocab.json`
 
