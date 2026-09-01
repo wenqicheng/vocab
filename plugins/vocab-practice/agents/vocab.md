@@ -94,7 +94,36 @@ Read both from config at the start of every session. They are not decoration —
 
 **How deep the explanation goes.** Beginner: simpler definitions, more usage examples. Advanced/expert: less hand-holding on the basic sense, more on nuance, connotation, and how the word differs from its near neighbours.
 
-**Recalibrating over time.** The bank is a better level signal than any setup answer, because it records what the user actually did not know. Every ~20 new terms, look at what they have been saving. If most saved words sit well above their recorded `level`, raise it one step, tell them in one line, and update `level` and `level_set_on`. Do the same downward if they keep saving words below it. Never change it silently.
+## Learning the user from their bank
+
+The setup answers are only a bootstrap. The bank is the real signal, because it is a record of words the user actually did not know — something no self-report can give you. Use it, and keep using it.
+
+**Run this at the start of every session, right after reading config:**
+```
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/vocab_practice.py profile
+```
+
+It counts everything deterministically so you never have to. What each field tells you:
+
+| Field | What to do with it |
+|---|---|
+| `recalibration_due` | `true` → run the level review below. Do not try to count terms yourself. |
+| `recent_terms` | the last 25 saved. Judge their difficulty — this is the level evidence. |
+| `register_mix` | mostly `formal` → they read documents and papers; mostly `oral` → conversation and video. Match your examples to it. |
+| `context_sources` | where their English comes from: `work doc`, `reading`, `conversation`. This is their real environment, more reliable than the `purpose` they picked at setup. |
+| `score_distribution` | many `struggling_below_0` → you are flagging words above their level, so ease off. Nothing in `mastered_5_plus` after many sessions → practice is not reaching production; use Type 8 more. |
+| `terms_with_follow_ups` | the terms they were confused enough to ask about. Prime material for practice questions. |
+
+**The level review**, when `recalibration_due` is `true`:
+
+1. Look at `recent_terms` and judge how hard those words actually are.
+2. If most sit clearly **above** the recorded `level`, raise it one step. If most sit clearly **below**, lower it one step. If mixed, leave it — do not chase noise.
+3. Update `level` and set `level_set_on` to today in `config.json`.
+4. **Tell the user in one line**, with the reason: *"You've been saving words like `salient` and `ostensible`, so I've moved you from intermediate to advanced — I'll stop offering the easier ones."* Never change it silently.
+
+**Correcting `purpose` too.** If `context_sources` disagrees with the recorded `purpose` — they said `school` but almost everything comes from `work doc` — say so once and offer to switch it. Their behaviour outranks their setup answer.
+
+**Backfilling.** If `register_mix` has a large `unknown` count, those are older entries saved before the field existed. Fill one in whenever such a term comes up in practice or review, rather than rewriting the bank in bulk.
 
 ## Data Files
 

@@ -193,12 +193,29 @@ def grade_batch():
 
         score_delta = SCORING.get((correct, conf), 0)
         entry = vocab_map.get(term_name)
+
+        # Capture the state the user was tested IN, before we update it.
+        score_before = entry.get("score", 0) if entry else None
+        gap_days = None
+        if entry and entry.get("last_review"):
+            try:
+                prev = date.fromisoformat(entry["last_review"])
+                gap_days = (date.today() - prev).days
+            except ValueError:
+                gap_days = None
+
         if entry:
             entry["score"] = entry.get("score", 0) + score_delta
             entry["reviews"] = entry.get("reviews", 0) + 1
             entry["last_review"] = today_str
 
-        log_entries.append({"date": today_str, "term": term_name, "correct": correct, "confidence": conf})
+        log_entries.append({
+            "date": today_str, "term": term_name,
+            "correct": correct, "confidence": conf,
+            "question_type": term_info.get("question_type"),
+            "score_before": score_before,
+            "gap_days": gap_days,
+        })
         results.append({
             "term": term_name,
             "your_answer": answers_raw[i].strip() if i < len(answers_raw) else "skip",
@@ -217,9 +234,82 @@ def grade_batch():
     print(json.dumps({"batch": batch_num, "results": results}, ensure_ascii=False, indent=2))
 
 
+RECALIBRATE_EVERY = 20
+
+
+def read_log():
+    """Practice log, skipping unreadable lines. Old lines predate some fields;
+    callers must tolerate them being absent rather than assume a default."""
+    if not LOG_FILE.exists():
+        return []
+    rows = []
+    for line in LOG_FILE.read_text().splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            rows.append(json.loads(line))
+        except json.JSONDecodeError:
+            continue
+    return rows
+
+
+def profile():
+    """Summarise what the bank reveals about the user, and say whether a
+    level recalibration is due. The counting is deterministic here; judging
+    whether the saved words are hard or easy is left to the caller."""
+    entries = load_vocab()
+    config = load_config()
+    since = config.get("level_set_on") or ""
+
+    def added_after(entry):
+        added = entry.get("added") or ""
+        # >= not >, so words saved on the same day as the last calibration
+        # still count toward the next one.
+        return bool(since) and added >= since
+
+    new_since = [e for e in entries if added_after(e)] if since else list(entries)
+
+    registers, sources = {}, {}
+    for e in entries:
+        reg = e.get("register") or "unknown"
+        registers[reg] = registers.get(reg, 0) + 1
+        ctx = (e.get("context") or "").strip()
+        # A short context is a source label; a long one is a real sentence.
+        label = ctx.lower() if 0 < len(ctx) <= 30 else ("sentence" if ctx else "none")
+        sources[label] = sources.get(label, 0) + 1
+
+    scores = [e.get("score", 0) for e in entries]
+    followed_up = [e.get("term") for e in entries if e.get("follow_ups")]
+
+    log = read_log()
+
+    out = {
+        "total_terms": len(entries),
+        "recorded_level": config.get("level", ""),
+        "recorded_purpose": config.get("purpose", ""),
+        "level_set_on": since,
+        "terms_added_since": len(new_since),
+        "recalibration_due": len(new_since) >= RECALIBRATE_EVERY,
+        "recalibrate_every": RECALIBRATE_EVERY,
+        "register_mix": registers,
+        "context_sources": sources,
+        "score_distribution": {
+            "struggling_below_0": sum(1 for s in scores if s < 0),
+            "learning_0_to_2": sum(1 for s in scores if 0 <= s <= 2),
+            "solid_3_to_4": sum(1 for s in scores if 3 <= s <= 4),
+            "mastered_5_plus": sum(1 for s in scores if s >= 5),
+        },
+        "terms_with_follow_ups": followed_up,
+        "recent_terms": [e.get("term") for e in new_since[-25:]],
+        "answers_logged": len(log),
+    }
+    print(json.dumps(out, ensure_ascii=False, indent=2))
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: vocab_practice.py [select|grade]")
+        print("Usage: vocab_practice.py [select|grade|profile]")
         sys.exit(1)
 
     cmd = sys.argv[1]
@@ -227,6 +317,8 @@ if __name__ == "__main__":
         select_terms()
     elif cmd == "grade":
         grade_batch()
+    elif cmd == "profile":
+        profile()
     else:
         print(f"Unknown command: {cmd}")
         sys.exit(1)

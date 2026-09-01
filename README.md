@@ -132,9 +132,13 @@ instead. Your answer sets a level, which decides which words are worth
 flagging — an advanced user never gets `improve` explained back to them,
 and a beginner doesn't get buried in `inchoate`.
 
-The level self-corrects as your bank grows. The words you actually save
-are a better signal than anything you can self-report, so the agent
-adjusts and tells you when it does.
+**It keeps learning you after that.** Your bank is a record of words you
+didn't know, which is a better signal than anything you can self-report.
+Every 20 new words the agent re-reads it and adjusts — your level, and
+also where your English actually comes from. If you said "school" at
+setup but everything you save comes from work documents, it notices and
+offers to switch. It always tells you what changed and why, and never
+adjusts silently.
 
 You can skip the word check, and it never asks where to put files — the
 bank goes in `~/vocab-practice` and it tells you so.
@@ -151,7 +155,7 @@ It rewrites the example generically instead of just refusing.
 | Part | Does what |
 |---|---|
 | `agents/vocab.md` | the dedicated agent — setup, capture flow, entry format, practice logic |
-| `scripts/vocab_practice.py` | picks due words, scores your answers |
+| `scripts/vocab_practice.py` | picks due words, scores your answers, profiles your bank |
 | `hooks/check-vocab-confidential.py` | blocks confidential content before it's saved |
 
 ## Getting updates
